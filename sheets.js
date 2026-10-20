@@ -188,7 +188,7 @@ window.SHEETS = [
           [["bat -d"], "only changed lines"],
           [["bat -A"], "show invisible chars"],
           [["… | bat -l json"], "highlight stdin as json"],
-          [["bat --list-languages"], "language names"],
+          [["bat -L"], "list language names"],
         ],
       },
       {

@@ -6,6 +6,8 @@ They're written for my own setup on macOS, so they mix each tool's defaults with
 
 Tokyo Night colors: Night or Day to match the system, and the sun/moon button overrides it (remembered per browser). The tabs at the top filter by sheet, and the filter is in the URL (`/#kitty`), so one sheet can be bookmarked or kept open on a second screen.
 
+The search box (or `/`) filters the current tab and highlights matches; `cmd`, `ctrl`, `shift` and `alt` also find ⌘ ⌃ ⇧ ⌥. Escape clears it.
+
 ## Edit
 
 Everything is static: no build step, no dependencies.

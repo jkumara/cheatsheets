@@ -42,7 +42,26 @@ header {
   padding: 0 28px;
 }
 h1 { color: var(--fg); font-size: 20px; flex: none; }
-.legend { color: var(--muted); font-size: 13px; flex: none; margin-left: auto; }
+.legend { color: var(--muted); font-size: 13px; flex: none; }
+
+#search {
+  flex: none;
+  width: 11rem;
+  margin-left: auto;
+  font: inherit;
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--key-bg);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 4px 13px;
+  outline: none;
+}
+#search::placeholder { color: var(--muted); }
+#search:focus { border-color: var(--fg); }
+mark { color: inherit; background: color-mix(in srgb, var(--yellow) 45%, transparent); border-radius: 2px; }
+.empty { color: var(--muted); }
+.empty a { color: var(--fg); }
 .legend .mine { color: var(--mine); }
 
 #theme {
@@ -74,8 +93,8 @@ nav a:hover { color: var(--accent); border-color: var(--accent); }
 nav a[aria-current="page"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 
 main { padding: 24px 28px 48px; }
-[data-view="all"] article + article { margin-top: 40px; }
-article[hidden] { display: none; }
+[data-view="all"] article:not([hidden]) ~ article:not([hidden]) { margin-top: 40px; }
+[hidden] { display: none !important; }
 h2 { color: var(--accent); font-size: 22px; margin-bottom: 16px; }
 [data-view]:not([data-view="all"]) h2 { display: none; }
 
@@ -93,8 +112,7 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
-/* --key-w is the widest key in the whole sheet (set by app.js), so every
-   section's descriptions start at the same place. */
+/* app.js sets --key-w so descriptions line up across the sheet's sections. */
 dl { display: grid; grid-template-columns: var(--key-w, fit-content(58%)) 1fr; gap: 6px 12px; align-items: baseline; }
 dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
 kbd {
@@ -109,7 +127,8 @@ kbd {
 .then { color: var(--muted); }
 dd { min-width: 0; }
 dl.stack { grid-template-columns: 1fr; gap: 3px; }
-dl.stack dd { padding-left: 12px; margin-bottom: 5px; }
+/* Lines up with the key text inside the kbd padding. */
+dl.stack dd { padding-left: 6px; margin-bottom: 5px; }
 
 pre {
   font: inherit;
@@ -122,10 +141,18 @@ pre {
 }
 .note { color: var(--muted); font-size: 13px; margin-top: 8px; }
 
-/* Phones: title and legend share the first row, tabs scroll on the second. */
+/* Narrower screens: title, legend and switch on the first row; the tabs
+   (scrolling sideways) and the search share the second. */
+@media (max-width: 1240px) {
+  header { flex-wrap: wrap; padding-top: 12px; }
+  header::after { content: ""; order: 1; flex-basis: 100%; }
+  .legend { margin-left: auto; }
+  nav { order: 2; flex: 1 1 0; }
+  #search { order: 3; margin-left: 0; }
+}
 @media (max-width: 760px) {
-  header { flex-wrap: wrap; padding: 12px 16px 0; }
-  nav { order: 1; flex-basis: 100%; }
+  header { padding: 12px 16px 0; gap: 0 12px; }
+  #search { width: 7.5rem; }
   main { padding: 18px 16px 40px; }
   .legend { font-size: 12px; }
   pre { font-size: 13px; }
