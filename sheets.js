@@ -1,0 +1,672 @@
+// Cheatsheet content. Each row is [keys, description, mine?].
+// keys is a list: each entry renders as one key, and "›" means "then".
+// mine = 1 marks my own bindings and aliases (shown in orange).
+// A section can also have `pre` (a preformatted block) and a `note`.
+
+const r = String.raw;
+const P = ["⌃B", "›"]; // herdr prefix
+
+window.SHEETS = [
+  {
+    id: "kitty",
+    name: "kitty",
+    accent: "blue",
+    sections: [
+      {
+        title: "Tabs",
+        rows: [
+          [["⌘T"], "new tab, same dir", 1],
+          [["⌘W"], "close pane (or tab)", 1],
+          [["⌘1…8"], "go to tab", 1],
+          [["⌘9"], "last tab", 1],
+          [["⌘Ö", "⌘Ä"], "prev / next tab", 1],
+          [["⇧⌘Ö", "⇧⌘Ä"], "move tab left / right", 1],
+          [["⇧⌘I"], "rename tab"],
+        ],
+      },
+      {
+        title: "Splits",
+        rows: [
+          [["⌘D"], "split right", 1],
+          [["⇧⌘D"], "split down", 1],
+          [["⌥⌘ ←↑↓→"], "focus pane", 1],
+          [["⌘[", "⌘]"], "prev / next pane", 1],
+          [["⌃⌘ ←↑↓→"], "resize", 1],
+          [["⌃⌘="], "equal sizes", 1],
+          [["⇧⌘↩"], "zoom pane", 1],
+          [["⌃⇧F7"], "pick pane by number"],
+          [["⌃⇧F8"], "swap with pane"],
+          [["⌃⇧F", "⌃⇧B"], "move pane fwd / back"],
+          [["⌘R"], "resize mode"],
+          [["⌃⇧L"], "splits ⇄ stack"],
+        ],
+      },
+      {
+        title: "Commands & scrollback",
+        rows: [
+          [["⌃⇧Z", "⌃⇧X"], "prev / next prompt"],
+          [["⌃⇧G"], "last output in nvim"],
+          [["⌃⇧H"], "scrollback in nvim"],
+          [["⌃⇧ right-click"], "that output in nvim"],
+          [["⌘F"], "search scrollback"],
+          [["⌘↑", "⌘↓"], "scroll a line"],
+          [["⌘Home", "⌘End"], "top / bottom"],
+          [["click"], "move cursor in prompt"],
+          [["⌘L"], "clear last output"],
+          [["⌃L"], "clear screen"],
+          [["⌥⌘K"], "clear scrollback too"],
+          [["⌥⌘R"], "reset terminal"],
+        ],
+      },
+      {
+        title: "Hints",
+        rows: [
+          [["⌃⇧E"], "open URL"],
+          [["⌃⇧P", "›", "F"], "type a path"],
+          [["⌃⇧P", "›", "⇧F"], "open a path"],
+          [["⌃⇧P", "›", "N"], "file:line in nvim"],
+          [["⌃⇧P", "›", "H"], "git hash"],
+          [["⌃⇧P", "›", "W", "L"], "word / line"],
+          [["⌃⇧P", "›", "C", "D"], "pick file / dir"],
+        ],
+      },
+      {
+        title: "Kittens",
+        rows: [
+          [["icat img.png"], "show an image", 1],
+          [["git difftool"], "side-by-side diff", 1],
+          [["ssh host"], "kitten ssh", 1],
+          [["… | kitten clipboard"], "copy to clipboard"],
+          [["kitten clipboard -g"], "paste clipboard"],
+        ],
+      },
+      {
+        title: "Window & text",
+        rows: [
+          [["⌘=", "⌘-", "⌘0"], "font size"],
+          [["⌃⌘F"], "fullscreen"],
+          [["select"], "copies", 1],
+          [["⌃⌘Space"], "emoji & unicode"],
+        ],
+      },
+      {
+        title: "kitty itself",
+        rows: [
+          [["⌃⇧Esc"], "kitty shell, all actions"],
+          [["⌘,"], "edit config"],
+          [["⌃⌘,"], "reload config"],
+          [["⌥⌘,"], "debug config"],
+          [["⌃⇧F1"], "docs"],
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "shell",
+    name: "shell",
+    accent: "cyan",
+    sections: [
+      {
+        title: "Line editing",
+        rows: [
+          [["⌃A", "⌃E"], "start / end of line"],
+          [["⌥B", "⌥F"], "word back / forward", 1],
+          [["⇧⌘←", "⇧⌘→"], "word back / forward", 1],
+          [["⌃W"], "delete word back"],
+          [["⌃U"], "delete whole line"],
+          [["⌃K"], "delete to end"],
+          [["⌃Y"], "paste what was deleted"],
+          [["⌃_"], "undo"],
+          [["⌃X", "⌃E"], "edit command in nvim"],
+          [["⌃L"], "clear screen"],
+        ],
+      },
+      {
+        title: "History",
+        rows: [
+          [["⌃R"], "fuzzy history (fzf)"],
+          [["!!"], "last command (sudo !!)"],
+          [["!$"], "last argument"],
+          [["⌥."], "insert last argument"],
+          [["_ cmd"], "sudo cmd"],
+        ],
+      },
+      {
+        title: "Directories",
+        rows: [
+          [["..", "..."], "up one / two"],
+          [["dir/"], "cd by typing the path"],
+          [["-"], "previous dir"],
+          [["d"], "recent dirs, numbered"],
+          [["1…9"], "jump to recent dir"],
+          [["take dir"], "mkdir + cd"],
+          [["md dir"], "mkdir -p"],
+        ],
+      },
+      {
+        title: "wd (warp points)",
+        rows: [
+          [["wd add name"], "bookmark this dir"],
+          [["wd name"], "go there"],
+          [["wd name sub/dir"], "go to a subdir of it"],
+          [["wd list"], "all warp points"],
+          [["wd show"], "points for this dir"],
+          [["wd ls name"], "ls a warp point"],
+          [["wd rm name"], "remove"],
+          [["wd clean"], "drop dead points"],
+        ],
+      },
+      {
+        title: "fzf",
+        rows: [
+          [["⌃T"], "insert file path"],
+          [["⌃R"], "search history"],
+          [["⌥C"], "cd into subdir"],
+          [["vi **⇥"], "fuzzy-complete a path"],
+          [["cd **⇥"], "fuzzy-complete a dir"],
+          [["ssh **⇥", "kill **⇥"], "hosts / processes"],
+          [["⌃J", "⌃K"], "down / up in the list"],
+          [["⇥"], "mark (multi-select)"],
+        ],
+      },
+      {
+        title: "fzf search syntax",
+        rows: [
+          [["'word"], "exact match"],
+          [["^start", "end$"], "prefix / suffix"],
+          [["!word"], "exclude"],
+          [["a | b"], "a or b"],
+        ],
+      },
+      {
+        title: "bat",
+        rows: [
+          [["bat file"], "view with syntax + git marks"],
+          [["bat -p"], "plain, no line numbers"],
+          [["bat -r 10:20"], "only lines 10–20"],
+          [["bat -d"], "only changed lines"],
+          [["bat -A"], "show invisible chars"],
+          [["… | bat -l json"], "highlight stdin as json"],
+          [["bat --list-languages"], "language names"],
+        ],
+      },
+      {
+        title: "lz (eza)",
+        rows: [
+          [["lz -la"], "all files, details", 1],
+          [["lz -T", "lz -T -L 2"], "tree / 2 levels deep", 1],
+          [["lz -l --git"], "with git status", 1],
+          [["lz -l -s modified"], "sort by time (-r flips)", 1],
+          [["lz -D"], "directories only", 1],
+          [["lz --icons"], "file icons", 1],
+        ],
+      },
+      {
+        title: "git (oh-my-zsh)",
+        rows: [
+          [["gst"], "status"],
+          [["ga", "gaa"], "add / add all"],
+          [["gcmsg \"msg\""], "commit -m"],
+          [["gc!"], "amend last commit"],
+          [["gsw", "gswc"], "switch / create branch"],
+          [["gd", "gds"], "diff / staged diff"],
+          [["gl", "gp"], "pull / push"],
+          [["gpsup"], "push new branch"],
+          [["glog"], "one-line graph"],
+          [["grbi", "grbc", "grba"], "rebase -i / continue / abort"],
+          [["gstp", "gstl"], "stash pop / list"],
+          [["lazygit"], "git TUI"],
+        ],
+      },
+      {
+        title: "My aliases",
+        rows: [
+          [["vi", "vim"], "nvim", 1],
+          [["lz"], "eza", 1],
+          [["y"], "yazi, cd on quit", 1],
+          [["zj"], "zellij", 1],
+          [["icat"], "kitten icat", 1],
+          [["ssh"], "kitten ssh (in kitty)", 1],
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "herdr",
+    name: "herdr",
+    accent: "red",
+    sections: [
+      {
+        title: "Basics",
+        rows: [
+          [["⌃B"], "prefix: press, then a key"],
+          [["⌘K"], "command bar (herdr-bar)", 1],
+          [[...P, "?"], "help"],
+          [[...P, "s"], "settings"],
+          [[...P, "q"], "detach"],
+          [[...P, "⇧R"], "reload config"],
+          [["⇧↩"], "newline in Claude Code", 1],
+        ],
+      },
+      {
+        title: "Workspaces",
+        rows: [
+          [["⌥↑", "⌥↓"], "prev / next workspace", 1],
+          [[...P, "w"], "workspace picker"],
+          [[...P, "g"], "go to…"],
+          [[...P, "⇧N"], "new workspace"],
+          [[...P, "⇧W"], "rename workspace"],
+          [[...P, "⇧D"], "close workspace"],
+          [[...P, "⇧G"], "new git worktree"],
+        ],
+      },
+      {
+        title: "Tabs",
+        rows: [
+          [["⌥←", "⌥→"], "prev / next tab", 1],
+          [[...P, "c"], "new tab"],
+          [[...P, "1…9"], "go to tab"],
+          [[...P, "⇧T"], "rename tab"],
+          [[...P, "⇧X"], "close tab"],
+        ],
+      },
+      {
+        title: "Panes",
+        rows: [
+          [["⌃⌥ ←↑↓→"], "focus pane", 1],
+          [[...P, "v"], "split vertical"],
+          [[...P, "-"], "split horizontal"],
+          [[...P, "⇥", "⇧⇥"], "next / prev pane"],
+          [[...P, "z"], "zoom pane"],
+          [[...P, "r"], "resize mode"],
+          [[...P, "x"], "close pane"],
+          [[...P, "⇧P"], "rename pane"],
+          [[...P, "e"], "scrollback in editor"],
+          [[...P, "b"], "toggle sidebar"],
+        ],
+        note: "⌥ is the left Option key; kitty sends it as Alt.",
+      },
+      {
+        title: "Agents",
+        rows: [
+          [["⌥⇧↑", "⌥⇧↓"], "prev / next agent", 1],
+          [[...P, "o"], "jump to notification"],
+        ],
+      },
+      {
+        title: "Command line",
+        rows: [
+          [["herdr"], "start or attach"],
+          [["herdr --remote host"], "attach over SSH"],
+          [["herdr --session name"], "named session"],
+          [["herdr status"], "client / server status"],
+          [["herdr server reload-config"], "reload config"],
+          [["herdr server stop"], "stop the server"],
+          [["herdr update"], "update herdr"],
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "yazi",
+    name: "yazi",
+    accent: "yellow",
+    sections: [
+      {
+        title: "Move",
+        rows: [
+          [["j", "k"], "down / up"],
+          [["h", "l"], "parent / enter dir"],
+          [["gg", "G"], "top / bottom"],
+          [["⌃D", "⌃U"], "half page down / up"],
+          [["H", "L"], "back / forward in history"],
+        ],
+      },
+      {
+        title: "Open & select",
+        rows: [
+          [["↩", "o"], "open"],
+          [["O"], "open with…"],
+          [["Space"], "select"],
+          [["v", "V"], "visual select / unselect"],
+          [["⌃A", "⌃R"], "select all / invert"],
+          [["Esc"], "clear selection"],
+        ],
+      },
+      {
+        title: "Files",
+        rows: [
+          [["y", "x"], "copy / cut"],
+          [["p", "P"], "paste / overwrite"],
+          [["Y"], "cancel copy / cut"],
+          [["d", "D"], "trash / delete for good"],
+          [["a"], "create (end in / for dir)"],
+          [["r"], "rename"],
+          [["-"], "symlink copied files"],
+        ],
+      },
+      {
+        title: "Find",
+        rows: [
+          [["f"], "filter the list"],
+          [["/", "?"], "find next / prev"],
+          [["n", "N"], "next / prev match"],
+          [["s"], "search names (fd)"],
+          [["S"], "search contents (rg)"],
+          [["z"], "fzf jump"],
+        ],
+      },
+      {
+        title: "Go to",
+        rows: [
+          [["gh"], "home"],
+          [["gc"], "~/.config"],
+          [["gd"], "~/Downloads"],
+          [["gt"], "trash"],
+          [["g Space"], "type a path"],
+          [["gf"], "follow symlink"],
+        ],
+      },
+      {
+        title: "View & copy",
+        rows: [
+          [["."], "hidden files"],
+          [["⇥"], "file info"],
+          [["J", "K"], "scroll preview"],
+          [[",m", ",s", ",n"], "sort time / size / name"],
+          [["ms", "mm", "mp"], "show size / time / perms"],
+          [["cc"], "copy path"],
+          [["cd", "cf"], "copy dir path / filename"],
+        ],
+        note: "Sort with a capital letter (,M) to reverse.",
+      },
+      {
+        title: "Tabs & more",
+        rows: [
+          [["tt"], "new tab"],
+          [["1…9"], "go to tab"],
+          [["[", "]"], "prev / next tab"],
+          [["tr"], "rename tab"],
+          [["⌃C"], "close tab"],
+          [[";", ":"], "shell cmd / and wait"],
+          [["w"], "tasks"],
+          [["q", "Q"], "quit (y: cd there) / quit"],
+          [["F1"], "help"],
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "neovim",
+    name: "neovim",
+    accent: "green",
+    sections: [
+      {
+        title: "Modes",
+        rows: [
+          [["i", "a"], "insert before / after"],
+          [["I", "A"], "insert at start / end"],
+          [["o", "O"], "new line below / above"],
+          [["v", "V", "⌃V"], "visual / line / block"],
+          [["Esc"], "back to normal"],
+          [[":"], "command line"],
+        ],
+      },
+      {
+        title: "Move",
+        rows: [
+          [["h j k l"], "left down up right"],
+          [["w", "b", "e"], "next / prev / end of word"],
+          [["0", "^", "$"], "line start / first char / end"],
+          [["gg", "G"], "top / bottom"],
+          [["42G"], "go to line 42"],
+          [["⌃D", "⌃U"], "half page down / up"],
+          [["f x", "t x"], "to / before char x"],
+          [[";", ","], "repeat f/t fwd / back"],
+          [["{", "}"], "prev / next paragraph"],
+          [["%"], "matching bracket"],
+          [["⌃O", "⌃I"], "jump back / forward"],
+          [["zz"], "center the screen"],
+        ],
+      },
+      {
+        title: "Edit",
+        rows: [
+          [["x"], "delete char"],
+          [["dd", "yy", "cc"], "delete / copy / change line"],
+          [["p", "P"], "paste after / before"],
+          [["u", "⌃R"], "undo / redo"],
+          [["."], "repeat last change"],
+          [["r x"], "replace char with x"],
+          [["J"], "join lines"],
+          [[">>", "<<"], "indent / outdent"],
+          [["~"], "toggle case"],
+          [["gcc", "gc"], "comment line / selection"],
+        ],
+      },
+      {
+        title: "Operator + motion",
+        rows: [
+          [["d", "c", "y"], "delete / change / copy…"],
+          [["dw", "d$", "dG"], "word / to end / to bottom"],
+          [["ciw", "diw"], "change / delete word"],
+          [["ci\"", "ci(", "ci{"], "inside quotes / ( ) / { }"],
+          [["da\"", "da("], "around, incl. the quotes"],
+          [["cit", "yap"], "inside tag / copy paragraph"],
+        ],
+      },
+      {
+        title: "Search & replace",
+        rows: [
+          [["/text", "?text"], "search fwd / back"],
+          [["n", "N"], "next / prev match"],
+          [["*", "#"], "word under cursor"],
+          [[":%s/old/new/g"], "replace in file"],
+          [[":%s/old/new/gc"], "replace, confirm each"],
+          [["⌃L"], "clear highlight"],
+        ],
+      },
+      {
+        title: "Files & windows",
+        rows: [
+          [[":w", ":q", ":wq"], "save / quit / both"],
+          [[":q!"], "quit, discard changes"],
+          [[":e file"], "open file"],
+          [["gf"], "open file under cursor"],
+          [["⌃W s", "⌃W v"], "split / vsplit"],
+          [["⌃W h j k l"], "move between splits"],
+          [["⌃W q"], "close split"],
+          [[":bn", ":bp"], "next / prev buffer"],
+        ],
+      },
+      {
+        title: "Registers & macros",
+        rows: [
+          [["\"+y", "\"+p"], "system clipboard"],
+          [["\"ay", "\"ap"], "copy / paste register a"],
+          [["qa", "q"], "record macro a / stop"],
+          [["@a", "@@"], "play a / play again"],
+          [[":reg"], "show registers"],
+        ],
+      },
+      {
+        title: "My setup",
+        rows: [
+          [[":PlugInstall"], "install plugins", 1],
+          [[":PlugUpdate"], "update plugins", 1],
+          [[":checkhealth"], "diagnose setup"],
+          [[":Tutor"], "built-in tutorial"],
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "cron",
+    name: "crontab",
+    accent: "teal",
+    sections: [
+      {
+        title: "Fields",
+        pre: [
+          "┌───────── minute        0–59",
+          "│ ┌─────── hour          0–23",
+          "│ │ ┌───── day of month  1–31",
+          "│ │ │ ┌─── month         1–12, jan–dec",
+          "│ │ │ │ ┌─ day of week   0–7, sun–sat",
+          "│ │ │ │ │",
+          "* * * * *  command",
+        ].join("\n"),
+        note: "Day of week: both 0 and 7 are Sunday.",
+      },
+      {
+        title: "Operators",
+        rows: [
+          [["*"], "every value"],
+          [["1,15"], "list"],
+          [["1-5"], "range"],
+          [["*/15"], "every 15th"],
+          [["0-30/10"], "0, 10, 20, 30"],
+        ],
+      },
+      {
+        title: "Shortcuts",
+        rows: [
+          [["@reboot"], "once at startup"],
+          [["@hourly"], "0 * * * *"],
+          [["@daily"], "0 0 * * *"],
+          [["@weekly"], "0 0 * * 0"],
+          [["@monthly"], "0 0 1 * *"],
+          [["@yearly"], "0 0 1 1 *"],
+        ],
+      },
+      {
+        title: "Examples",
+        rows: [
+          [["*/5 * * * *"], "every 5 minutes"],
+          [["0 * * * *"], "every hour, on the hour"],
+          [["0 */6 * * *"], "every 6 hours"],
+          [["30 9 * * 1-5"], "09:30 on weekdays"],
+          [["0 9-17 * * 1-5"], "hourly, 9–17 weekdays"],
+          [["0 22 * * 0"], "Sundays at 22:00"],
+          [["0 0 1 * *"], "midnight on the 1st"],
+          [["0 3 1 1,7 *"], "03:00 on 1 Jan and 1 Jul"],
+        ],
+      },
+      {
+        title: "crontab",
+        rows: [
+          [["crontab -e"], "edit your jobs"],
+          [["crontab -l"], "list them"],
+          [["crontab -r"], "delete all (no undo!)"],
+        ],
+      },
+      {
+        title: "Gotchas",
+        rows: [
+          [["day + weekday"], "both set: either matches"],
+          [["%"], "means newline: write \\%"],
+          [["PATH"], "minimal: use full paths"],
+          [[">> log 2>&1"], "keep the output"],
+          [["time zone"], "machine's local time"],
+        ],
+        note: "Vercel cron jobs use the same five fields, in UTC.",
+      },
+    ],
+  },
+
+  {
+    id: "regex",
+    name: "regex",
+    accent: "magenta",
+    sections: [
+      {
+        title: "Characters",
+        rows: [
+          [["."], "any char except newline"],
+          [[r`\d`, r`\w`, r`\s`], "digit / word char / space"],
+          [[r`\D`, r`\W`, r`\S`], "not digit / word / space"],
+          [["[abc]", "[^abc]"], "one of / none of"],
+          [["[a-z0-9]"], "ranges"],
+          [[r`\.`, r`\*`, r`\\`], "literal . * \\"],
+          [[r`\t`, r`\n`], "tab / newline"],
+        ],
+      },
+      {
+        title: "Anchors",
+        rows: [
+          [["^", "$"], "start / end of line"],
+          [[r`\b`, r`\B`], "word boundary / not"],
+          [[r`\A`, r`\z`], "start / end of text (not JS)"],
+        ],
+      },
+      {
+        title: "Quantifiers",
+        rows: [
+          [["*", "+", "?"], "0+ / 1+ / 0 or 1"],
+          [["{3}", "{2,}", "{2,5}"], "exactly / at least / between"],
+          [["*?", "+?"], "lazy: as few as possible"],
+        ],
+      },
+      {
+        title: "Groups",
+        rows: [
+          [["(abc)"], "capture group"],
+          [["(?:abc)"], "group, no capture"],
+          [["(?<name>abc)"], "named group"],
+          [["a|b"], "a or b"],
+          [[r`\1`], "same text as group 1"],
+          [["$1", "$<name>"], "group in replacement"],
+        ],
+      },
+      {
+        title: "Lookaround",
+        rows: [
+          [["x(?=y)"], "x if followed by y"],
+          [["x(?!y)"], "x if not followed by y"],
+          [["(?<=y)x"], "x if preceded by y"],
+          [["(?<!y)x"], "x if not preceded by y"],
+        ],
+        note: "Not in ripgrep's default engine: use rg -P.",
+      },
+      {
+        title: "Flags",
+        rows: [
+          [["i"], "ignore case"],
+          [["g"], "all matches (JS)"],
+          [["m"], "^ $ match every line"],
+          [["s"], ". matches newline too"],
+          [["(?i)"], "inline flag"],
+        ],
+      },
+      {
+        title: "Handy patterns",
+        rows: [
+          [[r`^\s*$`], "blank line"],
+          [[r`\s+$`], "trailing whitespace"],
+          [[r`\d{4}-\d{2}-\d{2}`], "ISO date"],
+          [[r`#[0-9a-fA-F]{6}\b`], "hex color"],
+          [[r`\b\d{1,3}(\.\d{1,3}){3}\b`], "IPv4-ish"],
+          [[r`[^@\s]+@[^@\s]+\.\w+`], "email-ish"],
+        ],
+      },
+      {
+        title: "Per tool",
+        rows: [
+          [["rg 'pat'"], "Rust regex: no lookaround / \\1"],
+          [["rg -P 'pat'"], "PCRE2: lookaround + \\1"],
+          [["rg 'a(b)' -r '$1'"], "show replaced output"],
+          [["grep -E", "sed -E"], "extended: ( ) | + ? { }"],
+          [["/re/flags"], "JavaScript literal"],
+          [[r`\v`], "nvim: very magic, JS-like"],
+          [[r`\<word\>`], "nvim: word boundaries"],
+          [[r`.\{-}`], "nvim: lazy match"],
+        ],
+      },
+    ],
+  },
+];

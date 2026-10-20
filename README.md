@@ -1,27 +1,25 @@
-# kitty cheatsheet
+# cheatsheets
 
-My personal [kitty](https://sw.kovidgoyal.net/kitty/) cheatsheet for macOS, in Tokyo Night colors. It covers kitty's defaults plus my own config (Ghostty-style splits and tabs, a herdr tab, yazi, `icat`). Keys in orange are my bindings, not kitty's.
+My personal cheatsheets, live at [cheatsheet.kumara.dev](https://cheatsheet.kumara.dev): kitty, shell (zsh, oh-my-zsh, wd, fzf, bat, eza), herdr, yazi, neovim, crontab and regex.
 
-![kitty cheatsheet](kitty-cheatsheet.png)
+They're written for my own setup on macOS, so they mix each tool's defaults with my config. Keys and aliases in orange are mine, not the tool's.
 
-## View it in kitty
-
-Keep it open in its own tab:
-
-```bash
-kitten icat --hold --fit=both --scale-up kitty-cheatsheet.png
-```
+Tokyo Night colors, Night in dark mode and Day in light mode. The tabs at the top filter by sheet, and the filter is in the URL (`/#kitty`), so one sheet can be bookmarked or kept open on a second screen.
 
 ## Edit
 
-The sheet is plain HTML. Edit `cheatsheet.html`, then rebuild the PNG with headless Chrome:
+Everything is static: no build step, no dependencies.
 
-```bash
-./render.sh
-```
+- `sheets.js` holds the content. Each row is `[keys, description, mine?]`.
+- `app.js` renders the sheets and handles the filter.
+- `style.css` is the layout and colors.
 
-Set `CHROME` to point at another Chromium-based browser if Chrome isn't in `/Applications`.
+Preview by opening `index.html` in a browser.
+
+## Deploy
+
+Vercel serves the folder as a static site and redeploys on every push to `main`.
 
 ## Credit
 
-Sections are based on [siekman.io's kitty cheatsheet](https://siekman.io/tools/cheatsheets/kitty). Every binding here was checked against kitty 0.49's defaults and my own `kitty.conf`.
+The kitty sheet started from [siekman.io's kitty cheatsheet](https://siekman.io/tools/cheatsheets/kitty). Every binding was checked against the installed tools and my configs.
