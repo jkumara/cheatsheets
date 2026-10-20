@@ -1,42 +1,25 @@
-/* Tokyo Night: Night in dark mode, Day in light mode. */
+/* Tokyo Night: light-dark(Day, Night). It follows the system unless theme.js
+   sets data-theme from the day/night switch. */
 :root {
-  --bg: #1a1b26;
-  --surface: #16161e;
-  --key-bg: #292e42;
-  --line: #292e42;
-  --fg: #c0caf5;
-  --text: #a9b1d6;
-  --muted: #737aa2;
-  --mine: #ff9e64;
-  --blue: #7aa2f7;
-  --cyan: #7dcfff;
-  --green: #9ece6a;
-  --magenta: #bb9af7;
-  --yellow: #e0af68;
-  --red: #f7768e;
-  --teal: #73daca;
-  color-scheme: dark;
+  --bg: light-dark(#e1e2e7, #1a1b26);
+  --surface: light-dark(#d0d5e3, #16161e);
+  --key-bg: light-dark(#c4c8da, #292e42);
+  --line: light-dark(#c4c8da, #292e42);
+  --fg: light-dark(#3760bf, #c0caf5);
+  --text: light-dark(#3b4261, #a9b1d6);
+  --muted: light-dark(#6172b0, #737aa2);
+  --mine: light-dark(#b15c00, #ff9e64);
+  --blue: light-dark(#2e7de9, #7aa2f7);
+  --cyan: light-dark(#007197, #7dcfff);
+  --green: light-dark(#587539, #9ece6a);
+  --magenta: light-dark(#9854f1, #bb9af7);
+  --yellow: light-dark(#8c6c3e, #e0af68);
+  --red: light-dark(#f52a65, #f7768e);
+  --teal: light-dark(#118c74, #73daca);
+  color-scheme: light dark;
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #e1e2e7;
-    --surface: #d0d5e3;
-    --key-bg: #c4c8da;
-    --line: #c4c8da;
-    --fg: #3760bf;
-    --text: #3b4261;
-    --muted: #6172b0;
-    --mine: #b15c00;
-    --blue: #2e7de9;
-    --cyan: #007197;
-    --green: #587539;
-    --magenta: #9854f1;
-    --yellow: #8c6c3e;
-    --red: #f52a65;
-    --teal: #118c74;
-    color-scheme: light;
-  }
-}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -61,6 +44,21 @@ header {
 h1 { color: var(--fg); font-size: 20px; flex: none; }
 .legend { color: var(--muted); font-size: 13px; flex: none; margin-left: auto; }
 .legend .mine { color: var(--mine); }
+
+#theme {
+  flex: none;
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 8px;
+  margin-left: -8px;
+  cursor: pointer;
+}
+#theme:hover { color: var(--fg); border-color: var(--fg); }
+#theme svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 
 nav { display: flex; gap: 6px; min-width: 0; overflow-x: auto; padding: 12px 0; scrollbar-width: none; }
 nav::-webkit-scrollbar { display: none; }

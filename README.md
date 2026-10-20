@@ -4,7 +4,7 @@ My personal cheatsheets, live at [cheat.kumara.dev](https://cheat.kumara.dev): k
 
 They're written for my own setup on macOS, so they mix each tool's defaults with my config. Keys and aliases in orange are mine, not the tool's.
 
-Tokyo Night colors, Night in dark mode and Day in light mode. The tabs at the top filter by sheet, and the filter is in the URL (`/#kitty`), so one sheet can be bookmarked or kept open on a second screen.
+Tokyo Night colors: Night or Day to match the system, and the sun/moon button overrides it (remembered per browser). The tabs at the top filter by sheet, and the filter is in the URL (`/#kitty`), so one sheet can be bookmarked or kept open on a second screen.
 
 ## Edit
 
