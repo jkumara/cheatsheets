@@ -1,6 +1,6 @@
 # cheatsheets
 
-My personal cheatsheets, live at [cheatsheet.kumara.dev](https://cheatsheet.kumara.dev): kitty, shell (zsh, oh-my-zsh, wd, fzf, bat, eza), herdr, yazi, neovim, crontab and regex.
+My personal cheatsheets, live at [cheat.kumara.dev](https://cheat.kumara.dev): kitty, shell (zsh, oh-my-zsh, wd, fzf, bat, eza), herdr, yazi, neovim, crontab and regex.
 
 They're written for my own setup on macOS, so they mix each tool's defaults with my config. Keys and aliases in orange are mine, not the tool's.
 
