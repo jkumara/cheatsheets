@@ -168,6 +168,8 @@ window.SHEETS = [
           [["ssh **⇥", "kill **⇥"], "hosts / processes"],
           [["⌃J", "⌃K"], "down / up in the list"],
           [["⇥"], "mark (multi-select)"],
+          [["⌃/"], "preview below / hidden / back", 1],
+          [["⇧↑", "⇧↓"], "scroll the preview"],
         ],
       },
       {
@@ -177,18 +179,6 @@ window.SHEETS = [
           [["^start", "end$"], "prefix / suffix"],
           [["!word"], "exclude"],
           [["a | b"], "a or b"],
-        ],
-      },
-      {
-        title: "bat",
-        rows: [
-          [["bat file"], "view with syntax + git marks"],
-          [["bat -p"], "plain, no line numbers"],
-          [["bat -r 10:20"], "only lines 10–20"],
-          [["bat -d"], "only changed lines"],
-          [["bat -A"], "show invisible chars"],
-          [["… | bat -l json"], "highlight stdin as json"],
-          [["bat -L"], "list language names"],
         ],
       },
       {
@@ -228,6 +218,90 @@ window.SHEETS = [
           [["zj"], "zellij", 1],
           [["icat"], "kitten icat", 1],
           [["ssh"], "kitten ssh (in kitty)", 1],
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "bat",
+    name: "bat",
+    accent: "magenta",
+    sections: [
+      {
+        title: "View",
+        rows: [
+          [["bat file"], "syntax + line numbers + git marks"],
+          [["bat -p", "bat -pp"], "plain / plain, no pager"],
+          [["bat -r 10:20"], "only lines 10–20"],
+          [["bat -r 40::5"], "line 40 and 5 lines around it"],
+          [["bat -r -10:"], "last 10 lines"],
+          [["bat -H 42"], "highlight line 42"],
+          [["bat -d"], "only lines changed in git"],
+          [["bat -A"], "show tabs, spaces, line ends"],
+          [["bat -S"], "cut long lines, don't wrap"],
+        ],
+      },
+      {
+        title: "Search in the pager",
+        rows: [
+          [["/text", "?text"], "search down / up (regex)"],
+          [["n", "N"], "next / previous match"],
+          [["&text"], "show only lines with text"],
+          [["&!text"], "show only lines without it"],
+          [["&", "›", "⏎"], "all lines again"],
+          [["/", "›", "⌃R"], "literal text, not regex"],
+          [["-i"], "toggle ignore case"],
+          [["Esc", "›", "u"], "hide match highlights"],
+        ],
+        note: "bat skips the pager when the file fits on screen: bat --paging=always to search a short one. Searches also hit line numbers; bat -p drops them.",
+      },
+      {
+        title: "Move in the pager",
+        rows: [
+          [["Space", "b"], "page down / up"],
+          [["d", "u"], "half page down / up"],
+          [["g", "G"], "top / bottom"],
+          [["h"], "all of less's keys"],
+          [["q"], "quit"],
+        ],
+      },
+      {
+        title: "Find, then view",
+        rows: [
+          [["rg -n text file"], "line numbers of the matches"],
+          [["bat -r 42::5 -H 42 file"], "show one match in context"],
+          [["rg -l text | xargs bat"], "every file containing text"],
+          [["fd -e md -X bat"], "every .md file"],
+        ],
+      },
+      {
+        title: "Pipe & combine",
+        rows: [
+          [["… | bat -l json"], "highlight stdin as json"],
+          [["bat -L"], "language names for -l"],
+          [["git show HEAD~1:file | bat -l js"], "an older version of a file"],
+          [["tail -f app.log | bat --paging=never -l log"], "follow a log"],
+        ],
+      },
+      {
+        title: "My setup",
+        rows: [
+          [["cmd --help"], "help, colored by bat", 1],
+          [["cmd -h"], "same, when -h is the last word", 1],
+          [[r`cmd \-h`], "plain help, skips bat", 1],
+          [["⌃T", "⌥C"], "fzf with a bat / tree preview", 1],
+          [["vi **⇥"], "same preview while completing", 1],
+          [["~/.config/bat/config"], "Tokyo Night, italics on", 1],
+        ],
+        note: "Not for df, du, ls and lz -h (sizes, headers) or git … --help (opens a man page).",
+      },
+      {
+        title: "Themes",
+        rows: [
+          [["bat --list-themes"], "every theme, previewed"],
+          [["bat --theme=ansi file"], "try a theme once"],
+          [["bat cache --build"], "after adding or editing one"],
         ],
       },
     ],
