@@ -54,6 +54,7 @@ window.SHEETS = [
           [["click"], "move cursor in prompt"],
           [["⌘L"], "clear last output"],
           [["⌃L"], "clear screen"],
+          [["⌘K"], "clear screen above prompt"],
           [["⌥⌘K"], "clear scrollback too"],
           [["⌥⌘R"], "reset terminal"],
         ],
@@ -331,7 +332,6 @@ window.SHEETS = [
         title: "Basics",
         rows: [
           [["⌃B"], "prefix: press, then a key"],
-          [["⌘K"], "command bar (herdr-bar)", 1],
           [[...P, "?"], "help"],
           [[...P, "s"], "settings"],
           [[...P, "q"], "detach"],
