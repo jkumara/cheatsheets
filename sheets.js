@@ -215,6 +215,7 @@ window.SHEETS = [
           [["vi", "vim"], "nvim", 1],
           [["lz"], "eza", 1],
           [["y"], "yazi, cd on quit", 1],
+          [["rgf"], "search all files (bat sheet)", 1],
           [["zj"], "zellij", 1],
           [["icat"], "kitten icat", 1],
           [["ssh"], "kitten ssh (in kitty)", 1],
@@ -265,6 +266,20 @@ window.SHEETS = [
           [["h"], "all of less's keys"],
           [["q"], "quit"],
         ],
+      },
+      {
+        title: "rgf: search all files",
+        rows: [
+          [["rgf", "rgf text"], "ripgrep as you type, bat preview", 1],
+          [["⏎"], "open the hit in nvim at its line", 1],
+          [["⇥", "⇧⇥"], "mark a hit, move down / up"],
+          [["⇧⇥", "›", "⏎"], "marked hits → nvim quickfix", 1],
+          [[":cn", ":cp"], "next / previous hit in nvim"],
+          [[":copen", ":cclose"], "show / hide the hit list"],
+          [["⌃/"], "preview below / hidden / back", 1],
+          [["Esc"], "quit"],
+        ],
+        note: "Searches everything below the current dir, skipping hidden and .gitignored files. Lowercase ignores case.",
       },
       {
         title: "Find, then view",
